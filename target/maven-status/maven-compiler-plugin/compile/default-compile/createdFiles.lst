@@ -1,0 +1,16 @@
+jp\co\sfrontier\ss3\game\value\MatchResult.class
+jp\co\sfrontier\ss3\game\common\Direction.class
+jp\co\sfrontier\ss3\game\model\MatchResult.class
+jp\co\sfrontier\ss3\game\model\MatchResultExample$Criterion.class
+jp\co\sfrontier\ss3\game\config\WebConfig.class
+jp\co\sfrontier\ss3\game\service\lookoverthere\LookOverTherePlayService.class
+jp\co\sfrontier\ss3\game\model\MatchResultExample.class
+jp\co\sfrontier\ss3\game\model\MatchResultExample$GeneratedCriteria.class
+jp\co\sfrontier\ss3\game\config\DbConfig.class
+jp\co\sfrontier\ss3\game\service\lookoverthere\value\Player.class
+jp\co\sfrontier\ss3\game\init\GameWebAppInitializer.class
+jp\co\sfrontier\ss3\game\mapper\MatchResultMapper.class
+jp\co\sfrontier\ss3\game\model\MatchResultExample$Criteria.class
+jp\co\sfrontier\ss3\game\controller\LookOverThereController.class
+jp\co\sfrontier\ss3\game\value\LookOverThereMatchResult.class
+jp\co\sfrontier\ss3\game\common\ResultCode.class

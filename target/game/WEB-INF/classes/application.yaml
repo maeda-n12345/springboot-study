@@ -1,0 +1,16 @@
+spring :
+  servlet :
+    encoding :
+      charset : UTF-8      
+      enabled : true       
+      force : true 
+  datasource:
+    url: jdbc:hsqldb:hsql://localhost:9001/game
+    username: LOCAL_USER
+    password: password
+    driver-class-name: org.hsqldb.jdbcDriver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      idle-timeout: 600000      # 10分
+      connection-timeout: 30000 # 30秒
