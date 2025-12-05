@@ -37,8 +37,8 @@ public interface MatchResultMapper {
 	List<MatchResult> selectByAttackerId(@Param("attackerId") long attackerId, @Param("gameId") long gameId);
 
 	/**
-	 * 直近の対戦履歴を取得する<br>
+	 * 1日の最新対戦履歴を取得する<br>
 	 * <br>
 	 */
-	List<MatchResult> selectRecent(int limit);
+	List<MatchResult> selectRecent();
 }

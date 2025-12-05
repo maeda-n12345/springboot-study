@@ -23,7 +23,7 @@
 	</form>
 
 
-	<h3>直近の対戦履歴</h3>
+	<h3>本日の対戦履歴（最新10件）</h3>
 	<c:choose>
 		<c:when test="{empty recentHistory}">
 			<div>対戦履歴がありません</div>
@@ -41,7 +41,6 @@
 				<tbody>
 					<fmt:formatDate value="${h.matchDatetime}"
 						pattern="yyyy/MM/dd HH:mm:ss" />
-
 					<tr>
 						<td><c:out value="${h.matchDatetime}" /></td>
 						<td><c:out value="${h.attackerId}" /></td>

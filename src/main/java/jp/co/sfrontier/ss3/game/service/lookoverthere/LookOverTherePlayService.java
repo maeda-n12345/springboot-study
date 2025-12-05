@@ -143,17 +143,8 @@ public class LookOverTherePlayService {
 	 * <br>
 	 */
 	@Transactional(readOnly = true)
-	public List<MatchResult> getRecentMatchResults(int limit) {
-		return matchResultMapper.selectRecent(limit);
-	}
-
-	/**
-	 * 10 件の対戦履歴を取得する<br>
-	 * <br>
-	 */
-	@Transactional(readOnly = true)
 	public List<MatchResult> getRecentMatchResults() {
-		return matchResultMapper.selectRecent(10);
+		return matchResultMapper.selectRecent();
 	}
 
 }
