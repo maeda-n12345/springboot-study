@@ -41,7 +41,7 @@ public class LookOverThereController {
 	public ModelAndView play() {
 		logger.info("「あっちむいてほい」の初期画面");
 
-		List<MatchResult> recentHistory = lookOverTherePlayService.getRecentMatchResults(10);
+		List<MatchResult> recentHistory = lookOverTherePlayService.getRecentMatchResults();
 
 		ModelAndView mav = new ModelAndView("lookoverthere/play");
 		mav.addObject("name", "山田太郎");
