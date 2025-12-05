@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+
+	<classPathEntry
+		location="C:/Users/sf0549/.m2/repository/org/hsqldb/hsqldb/2.7.3/hsqldb-2.7.3.jar" />
+	<context id="game" targetRuntime="MyBatis3">
+		<jdbcConnection
+			connectionURL="jdbc:hsqldb:hsql://localhost:9001/game;default_schema=GAME"
+			driverClass="org.hsqldb.jdbc.JDBCDriver" password="password"
+			userId="LOCAL_USER" />
+		<javaModelGenerator
+			targetPackage="jp.co.sfrontier.ss3.game.model"
+			targetProject="game/src/main/java" />
+		<sqlMapGenerator
+			targetPackage="jp.co.sfrontier.ss3.game.mapper"
+			targetProject="game/src/main/resources" />
+		<javaClientGenerator
+			targetPackage="jp.co.sfrontier.ss3.game.mapper"
+			targetProject="game/src/main/java" type="XMLMAPPER" />
+		<table schema="game" tableName="match_result"
+			enableDeleteByExample="false" enableDeleteByPrimaryKey="false"
+			enableUpdateByExample="false" enableUpdateByPrimaryKey="false"
+			enableCountByExample="false" enableSelectByExample="false">
+			<generatedKey column="match_result_id"
+				sqlStatement="HSQLDB" identity="true" />
+		</table>
+	</context>
+</generatorConfiguration>
