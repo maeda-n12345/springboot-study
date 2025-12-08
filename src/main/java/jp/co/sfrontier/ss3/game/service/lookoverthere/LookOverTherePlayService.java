@@ -143,8 +143,8 @@ public class LookOverTherePlayService {
 	 * <br>
 	 */
 	@Transactional(readOnly = true)
-	public List<MatchResult> getRecentMatchResults() {
-		return matchResultMapper.selectRecent();
+	public List<MatchResult> getRecentHistory() {
+		return matchResultMapper.selectRecentHistory();
 	}
 
 }

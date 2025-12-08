@@ -142,8 +142,8 @@
 		  MATCH_DATETIME DESC
 	</select>
 	
-	<select id="selectRecent" 
-		resultMap="BaseResultMap">
+	<select id="selectRecentHistory"
+          resultType="jp.co.sfrontier.ss3.game.value.LookOverThereMatchHistory">
 		
 		SELECT
 		  match_result.MATCH_DATETIME    

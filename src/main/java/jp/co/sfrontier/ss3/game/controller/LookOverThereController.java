@@ -41,11 +41,11 @@ public class LookOverThereController {
 	public ModelAndView play() {
 		logger.info("「あっちむいてほい」の初期画面");
 
-		List<MatchResult> recentHistory = lookOverTherePlayService.getRecentMatchResults();
+		List<MatchResult> recentHistory = lookOverTherePlayService.getRecentHistory();
 
 		ModelAndView mav = new ModelAndView("lookoverthere/play");
 		mav.addObject("name", "山田太郎");
-		mav.addObject("recentHistory", recentHistory);
+		mav.addObject("history", recentHistory);
 
 		return mav;
 	}
@@ -68,7 +68,7 @@ public class LookOverThereController {
 		}
 
 		Player player = new Player();
-		player.setId(Long.valueOf(100L));
+		player.setId(Long.valueOf(10L));
 		player.setPlayerName("山田太郎");
 		player.setDirection(Direction.get(Integer.valueOf(direction)));
 

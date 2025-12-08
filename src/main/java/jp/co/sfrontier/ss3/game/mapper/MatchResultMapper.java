@@ -40,5 +40,5 @@ public interface MatchResultMapper {
 	 * 1日の最新対戦履歴を取得する<br>
 	 * <br>
 	 */
-	List<MatchResult> selectRecent();
+	List<MatchResult> selectRecentHistory();
 }

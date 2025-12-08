@@ -10,7 +10,9 @@ import javax.sql.DataSource;
 import org.dbunit.database.DatabaseConfig;
 import org.dbunit.database.DatabaseConnection;
 import org.dbunit.database.IDatabaseConnection;
+import org.dbunit.dataset.DefaultDataSet;
 import org.dbunit.dataset.IDataSet;
+import org.dbunit.dataset.ITable;
 import org.dbunit.dataset.csv.CsvDataSet;
 import org.dbunit.ext.hsqldb.HsqldbDataTypeFactory;
 import org.dbunit.operation.DatabaseOperation;
@@ -53,28 +55,44 @@ public class MatchResultMapperTest {
 	/**
 	 * @throws java.lang.Exception
 	 */
+
 	@BeforeAll
 	public void setUpBeforeClass() throws Exception {
-		// テストデータを読み込む
-		// Spring が管理している DataSource から、通常の JDBC 接続を取得する
+		// Spring 管理の DataSource から DBUnit 接続を作成
 		IDatabaseConnection connection = new DatabaseConnection(dataSource.getConnection(), SCHEMA_NAME);
+
 		DatabaseConfig config = connection.getConfig();
 		config.setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY,
 				new HsqldbDataTypeFactory());
-		IDataSet dataSet = new CsvDataSet(DATA_PATH.toFile());
-		DatabaseOperation.INSERT.execute(connection, dataSet);
+
+		// フォルダ内の CSV から DataSet を構築（GAME_USER.csv, match_result.csv）
+		IDataSet allDataSet = new CsvDataSet(DATA_PATH.toFile());
+
+		// 親テーブル GAME_USER のみを取り出す
+		ITable gameUserTable = allDataSet.getTable("GAME_USER");
+		IDataSet gameUserDataSet = new DefaultDataSet(gameUserTable);
+
+		// 子テーブル MATCH_RESULT のみを取り出す
+		ITable matchResultTable = allDataSet.getTable("MATCH_RESULT");
+		IDataSet matchResultDataSet = new DefaultDataSet(matchResultTable);
+
+		// ★ 親 → 子 の順で INSERT (必要なら CLEAN_INSERT でもOK)
+		DatabaseOperation.INSERT.execute(connection, gameUserDataSet);
+		DatabaseOperation.INSERT.execute(connection, matchResultDataSet);
 	}
 
-	/**
-	 * @throws java.lang.Exception
-	 */
 	@AfterAll
 	public void tearDownAfterClass() throws Exception {
 		IDatabaseConnection connection = new DatabaseConnection(dataSource.getConnection(), SCHEMA_NAME);
+
 		DatabaseConfig config = connection.getConfig();
 		config.setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY,
 				new HsqldbDataTypeFactory());
+		config.setProperty(DatabaseConfig.FEATURE_CASE_SENSITIVE_TABLE_NAMES, false);
+
 		IDataSet dataSet = new CsvDataSet(DATA_PATH.toFile());
+
+		// ★ 対応するレコードを削除
 		DatabaseOperation.DELETE.execute(connection, dataSet);
 	}
 
