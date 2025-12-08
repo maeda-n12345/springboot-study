@@ -15,9 +15,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import jp.co.sfrontier.ss3.game.common.Direction;
 import jp.co.sfrontier.ss3.game.common.ResultCode;
-import jp.co.sfrontier.ss3.game.model.MatchResult;
 import jp.co.sfrontier.ss3.game.service.lookoverthere.LookOverTherePlayService;
 import jp.co.sfrontier.ss3.game.service.lookoverthere.value.Player;
+import jp.co.sfrontier.ss3.game.value.LookOverThereMatchHistory;
 import jp.co.sfrontier.ss3.game.value.LookOverThereMatchResult;
 
 /**
@@ -41,14 +41,17 @@ public class LookOverThereController {
 	public ModelAndView play() {
 		logger.info("「あっちむいてほい」の初期画面");
 
-		List<MatchResult> recentHistory = lookOverTherePlayService.getRecentHistory();
+		// ★ サービスから履歴（DTO のリスト）を取得
+		List<LookOverThereMatchHistory> recentHistory = lookOverTherePlayService.getHistory();
 
 		ModelAndView mav = new ModelAndView("lookoverthere/play");
 		mav.addObject("name", "山田太郎");
-		mav.addObject("history", recentHistory);
+		// ★ 取得した履歴を "historyList" という名前で画面に渡す
+		mav.addObject("historyList", recentHistory);
 
 		return mav;
 	}
+
 
 	/**
 	 * ゲームを実行する<br>

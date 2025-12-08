@@ -1,11 +1,13 @@
 package jp.co.sfrontier.ss3.game.mapper;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import jp.co.sfrontier.ss3.game.model.MatchResult;
+import jp.co.sfrontier.ss3.game.value.LookOverThereMatchHistory;
 
 @Mapper
 public interface MatchResultMapper {
@@ -40,5 +42,13 @@ public interface MatchResultMapper {
 	 * 1日の最新対戦履歴を取得する<br>
 	 * <br>
 	 */
-	List<MatchResult> selectRecentHistory();
+	/**
+	 * 1日の最新対戦履歴を取得する<br>
+	 * <br>
+	 */
+	List<LookOverThereMatchHistory> selectRecentHistory(
+	        @Param("fromDate") LocalDateTime fromDate,
+	        @Param("toDate") LocalDateTime toDate,
+	        @Param("playerId") Long playerId);
+
 }

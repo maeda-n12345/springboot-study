@@ -3,6 +3,8 @@ package jp.co.sfrontier.ss3.game.mapper;
 import static org.assertj.core.api.Assertions.*;
 
 import java.nio.file.Path;
+import java.sql.Connection;
+import java.sql.Statement;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -16,7 +18,6 @@ import org.dbunit.dataset.ITable;
 import org.dbunit.dataset.csv.CsvDataSet;
 import org.dbunit.ext.hsqldb.HsqldbDataTypeFactory;
 import org.dbunit.operation.DatabaseOperation;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -58,43 +59,61 @@ public class MatchResultMapperTest {
 
 	@BeforeAll
 	public void setUpBeforeClass() throws Exception {
-		// Spring 管理の DataSource から DBUnit 接続を作成
-		IDatabaseConnection connection = new DatabaseConnection(dataSource.getConnection(), SCHEMA_NAME);
 
-		DatabaseConfig config = connection.getConfig();
-		config.setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY,
-				new HsqldbDataTypeFactory());
+		// 1) Spring管理の DataSource から JDBC コネクションを取得
+		try (Connection conn = dataSource.getConnection()) {
 
-		// フォルダ内の CSV から DataSet を構築（GAME_USER.csv, match_result.csv）
-		IDataSet allDataSet = new CsvDataSet(DATA_PATH.toFile());
+			// ★ 1-1) まず既存データを削除（子テーブル → 親テーブルの順）
+			try (Statement stmt = conn.createStatement()) {
+				// MATCH_RESULT から先に消す
+				stmt.executeUpdate("DELETE FROM GAME.MATCH_RESULT");
+				// 次に GAME_USER
+				stmt.executeUpdate("DELETE FROM GAME.GAME_USER");
+			}
 
-		// 親テーブル GAME_USER のみを取り出す
-		ITable gameUserTable = allDataSet.getTable("GAME_USER");
-		IDataSet gameUserDataSet = new DefaultDataSet(gameUserTable);
+			// 2) DBUnit の接続ラッパーを作成（スキーマは GAME）
+			IDatabaseConnection connection = new DatabaseConnection(conn, SCHEMA_NAME);
 
-		// 子テーブル MATCH_RESULT のみを取り出す
-		ITable matchResultTable = allDataSet.getTable("MATCH_RESULT");
-		IDataSet matchResultDataSet = new DefaultDataSet(matchResultTable);
+			DatabaseConfig config = connection.getConfig();
+			config.setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY,
+					new HsqldbDataTypeFactory());
+			config.setProperty(DatabaseConfig.FEATURE_CASE_SENSITIVE_TABLE_NAMES, false);
 
-		// ★ 親 → 子 の順で INSERT (必要なら CLEAN_INSERT でもOK)
-		DatabaseOperation.INSERT.execute(connection, gameUserDataSet);
-		DatabaseOperation.INSERT.execute(connection, matchResultDataSet);
+			// 3) フォルダ内の CSV から DataSet を構築（GAME_USER.csv, match_result.csv）
+			IDataSet allDataSet = new CsvDataSet(DATA_PATH.toFile());
+
+			// 親テーブル GAME_USER のみを取り出す
+			ITable gameUserTable = allDataSet.getTable("GAME_USER");
+			IDataSet gameUserDataSet = new DefaultDataSet(gameUserTable);
+
+			// 子テーブル MATCH_RESULT のみを取り出す
+			ITable matchResultTable = allDataSet.getTable("MATCH_RESULT");
+			IDataSet matchResultDataSet = new DefaultDataSet(matchResultTable);
+
+			// 4) 親 → 子 の順で INSERT
+			DatabaseOperation.INSERT.execute(connection, gameUserDataSet);
+			DatabaseOperation.INSERT.execute(connection, matchResultDataSet);
+		}
 	}
 
-	@AfterAll
-	public void tearDownAfterClass() throws Exception {
-		IDatabaseConnection connection = new DatabaseConnection(dataSource.getConnection(), SCHEMA_NAME);
-
-		DatabaseConfig config = connection.getConfig();
-		config.setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY,
-				new HsqldbDataTypeFactory());
-		config.setProperty(DatabaseConfig.FEATURE_CASE_SENSITIVE_TABLE_NAMES, false);
-
-		IDataSet dataSet = new CsvDataSet(DATA_PATH.toFile());
-
-		// ★ 対応するレコードを削除
-		DatabaseOperation.DELETE.execute(connection, dataSet);
-	}
+//	@AfterAll
+//	public void tearDownAfterClass() throws Exception {
+//
+//		// テストで入れたデータだけ削除する
+//		try (Connection conn = dataSource.getConnection()) {
+//
+//			IDatabaseConnection connection = new DatabaseConnection(conn, SCHEMA_NAME);
+//
+//			DatabaseConfig config = connection.getConfig();
+//			config.setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY,
+//					new HsqldbDataTypeFactory());
+//			config.setProperty(DatabaseConfig.FEATURE_CASE_SENSITIVE_TABLE_NAMES, false);
+//
+//			// CSV に載っている GAME_USER / MATCH_RESULT の行だけ削除
+//			IDataSet dataSet = new CsvDataSet(DATA_PATH.toFile());
+//			DatabaseOperation.DELETE.execute(connection, dataSet);
+//		}
+//	}
 
 	/**
 	 * すべての項目について、期待値と一致していることを確認する<br>

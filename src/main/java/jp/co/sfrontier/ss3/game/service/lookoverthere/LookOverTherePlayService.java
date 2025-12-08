@@ -1,5 +1,8 @@
 package jp.co.sfrontier.ss3.game.service.lookoverthere;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -14,6 +17,7 @@ import jp.co.sfrontier.ss3.game.common.Direction;
 import jp.co.sfrontier.ss3.game.mapper.MatchResultMapper;
 import jp.co.sfrontier.ss3.game.model.MatchResult;
 import jp.co.sfrontier.ss3.game.service.lookoverthere.value.Player;
+import jp.co.sfrontier.ss3.game.value.LookOverThereMatchHistory;
 
 /**
  * 「あっちむいてほい」についての各種サービスを提供する。<br>
@@ -139,12 +143,19 @@ public class LookOverTherePlayService {
 	}
 
 	/**
-	 * 直近の対戦履歴を取得する<br>
-	 * <br>
+	 * 本日の対戦履歴 最新10件を取得する。
 	 */
-	@Transactional(readOnly = true)
-	public List<MatchResult> getRecentHistory() {
-		return matchResultMapper.selectRecentHistory();
+	public List<LookOverThereMatchHistory> getHistory() {
+	    ZoneId zone = ZoneId.of("Asia/Tokyo");
+	    LocalDate today = LocalDate.now(zone);
+
+	    LocalDateTime fromDate = today.atStartOfDay();              
+	    LocalDateTime toDate   = today.plusDays(1).atStartOfDay(); 
+
+	    Long playerId = 10L; 
+
+	    return matchResultMapper.selectRecentHistory(fromDate, toDate, playerId);
 	}
 
 }
+

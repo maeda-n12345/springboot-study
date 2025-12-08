@@ -143,28 +143,29 @@
 	</select>
 	
 	<select id="selectRecentHistory"
-          resultType="jp.co.sfrontier.ss3.game.value.LookOverThereMatchHistory">
-		
-		SELECT
-		  match_result.MATCH_DATETIME    
-		   AS matchDatetime,
-		  attacker_user.DISPLAY_NAME     
-		   AS attackerDisplayName,
-		  defender_user.DISPLAY_NAME      
-		   AS defenderDisplayName,
-		  match_result.JUDGE             
-		   AS judge
-		FROM
-		  GAME.MATCH_RESULT match_result
-		  JOIN GAME.GAME_USER attacker_user
-		    ON match_result.ATTACKER_ID = attacker_user.GAME_USER_ID
-		  JOIN GAME.GAME_USER defender_user
-		    ON match_result.DEFENDER_ID = defender_user.GAME_USER_ID
-		WHERE
-		  match_result.GAME_ID = 2
-		  AND CAST(match_result.MATCH_DATETIME AS DATE) = CURRENT_DATE
-		ORDER BY
-		  match_result.MATCH_DATETIME DESC
-		LIMIT 10;
+	        resultType="jp.co.sfrontier.ss3.game.value.LookOverThereMatchHistory">
+
+	    SELECT
+	        MATCH_RESULT.MATCH_DATETIME AS matchDatetime,
+	        ATTACKER.DISPLAY_NAME      AS attackerDisplayName,
+	        DEFENDER.DISPLAY_NAME      AS defenderDisplayName,
+	        MATCH_RESULT.JUDGE         AS judge
+	    FROM
+	        GAME.MATCH_RESULT MATCH_RESULT
+	        JOIN GAME.GAME_USER ATTACKER
+	          ON MATCH_RESULT.ATTACKER_ID = ATTACKER.GAME_USER_ID
+	        JOIN GAME.GAME_USER DEFENDER
+	          ON MATCH_RESULT.DEFENDER_ID = DEFENDER.GAME_USER_ID
+	    WHERE
+	        MATCH_RESULT.MATCH_DATETIME >= #{fromDate}
+	      AND MATCH_RESULT.MATCH_DATETIME &lt; #{toDate}
+	      AND MATCH_RESULT.ATTACKER_ID = #{playerId} 
+	    ORDER BY
+	        MATCH_RESULT.MATCH_DATETIME DESC
+	    LIMIT 10
 	</select>
+
+
+
+
 </mapper>
