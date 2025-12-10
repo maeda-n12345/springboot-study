@@ -15,9 +15,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * DB 関連の初期化を行う。
-
- * 
-
  */
 @Configuration
 @EnableTransactionManagement

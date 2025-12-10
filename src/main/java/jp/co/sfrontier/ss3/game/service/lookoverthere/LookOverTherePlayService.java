@@ -86,45 +86,53 @@ public class LookOverTherePlayService {
 	/**
 	 * 対戦結果を DB に保存する<br>
 	 * 1回の対戦について、攻撃側の視点と防御側の視点の2レコードを登録する。<br>
-	 * 
+	 *
 	 * @param attacker 指をさすプレイヤー
 	 * @param defender 顔を動かすプレイヤー
 	 */
 	private void saveMatchResult(Player attacker, Player defender) {
-		Date matchDatetime = new Date();
+	    Date matchDatetime = new Date();
 
-		registMatchResult(attacker.getId(), defender.getId(), attacker.isWin(), matchDatetime);
+	    // アタッカー視点の1レコード
+	    registMatchResult(attacker, defender, attacker.isWin(), matchDatetime);
 
-		registMatchResult(defender.getId(), attacker.getId(), defender.isWin(), matchDatetime);
+	    // ディフェンダー視点の1レコード
+	    registMatchResult(defender, attacker, defender.isWin(), matchDatetime);
 	}
 
 	/**
 	 * 1レコード分の対戦結果を DB に登録する。<br>
-	 * 
-	 * @param attackerId
-	 * @param defenderId
-	 * @param isAttackerWin
-	 * @param matchDatetime
+	 *
+	 * @param attacker     このレコードの「アタッカー」
+	 * @param defender     このレコードの「ディフェンダー」
+	 * @param isAttackerWin アタッカー視点で勝ちなら true
+	 * @param matchDatetime 対戦日時
 	 * @return 登録した MatchResult エンティティ
 	 */
-	private MatchResult registMatchResult(Long attackerId, Long defenderId, boolean isAttackerWin, Date matchDatetime) {
+	private MatchResult registMatchResult(Player attacker, Player defender,boolean isAttackerWin, Date matchDatetime) {
 
-		MatchResult matchResult = new MatchResult();
+	    MatchResult matchResult = new MatchResult();
 
-		matchResult.setAttackerId(attackerId);
-		matchResult.setDefenderId(defenderId);
-		matchResult.setGameId(GAME_ID);
-		matchResult.setMatchDatetime(matchDatetime);
-		matchResult.setJudge((isAttackerWin) ? Integer.valueOf(1) : Integer.valueOf(0));
-		matchResult.setCreatedAt(matchDatetime);
-		matchResult.setUpdatedAt(matchDatetime);
-		matchResult.setVersion(Integer.valueOf(1));
+	    matchResult.setAttackerId(attacker.getId());
+	    matchResult.setDefenderId(defender.getId());
+	    matchResult.setGameId(GAME_ID);
+	    matchResult.setMatchDatetime(matchDatetime);
 
-		matchResultMapper.insert(matchResult);
+	    // 勝敗（アタッカー視点：勝ち=1 / 負け=0）
+	    matchResult.setJudge(isAttackerWin ? Integer.valueOf(1) : Integer.valueOf(0));
 
-		logger.debug("登録完了:result_match_id={}", matchResult.getMatchResultId());
+	    matchResult.setAttackerDirection(attacker.getDirection().getVal());
+	    matchResult.setDefenderDirection(defender.getDirection().getVal());
 
-		return matchResult;
+	    matchResult.setCreatedAt(matchDatetime);
+	    matchResult.setUpdatedAt(matchDatetime);
+	    matchResult.setVersion(Integer.valueOf(1));
+
+	    matchResultMapper.insert(matchResult);
+
+	    logger.debug("登録完了:match_result_id={}", matchResult.getMatchResultId());
+
+	    return matchResult;
 	}
 
 	/**
@@ -146,16 +154,15 @@ public class LookOverTherePlayService {
 	 * 本日の対戦履歴 最新10件を取得する。
 	 */
 	public List<LookOverThereMatchHistory> getHistory() {
-	    ZoneId zone = ZoneId.of("Asia/Tokyo");
-	    LocalDate today = LocalDate.now(zone);
+		ZoneId zone = ZoneId.of("Asia/Tokyo");
+		LocalDate today = LocalDate.now(zone);
 
-	    LocalDateTime fromDate = today.atStartOfDay();              
-	    LocalDateTime toDate   = today.plusDays(1).atStartOfDay(); 
+		LocalDateTime fromDate = today.atStartOfDay();
+		LocalDateTime toDate = today.plusDays(1).atStartOfDay();
 
-	    Long playerId = 10L; 
+		Long playerId = 10L;
 
-	    return matchResultMapper.selectRecentHistory(fromDate, toDate, playerId);
+		return matchResultMapper.selectRecentHistory(fromDate, toDate, playerId);
 	}
 
 }
-

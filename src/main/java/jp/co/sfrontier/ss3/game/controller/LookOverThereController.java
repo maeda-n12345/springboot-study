@@ -48,10 +48,16 @@ public class LookOverThereController {
 		mav.addObject("name", "山田太郎");
 		// ★ 取得した履歴を "historyList" という名前で画面に渡す
 		mav.addObject("historyList", recentHistory);
+		// CPU が出した直近5戦の手 (ディフェンダーの方向) を矢印のリストに変換
+		List<String> cpuLast5Hands = recentHistory.stream()
+				.limit(5) // 先頭から5件だけ
+				.map(h -> toArrow(h.getDefenderDirection())) // ★ getter 名は実際に合わせて
+				.toList();
+		mav.addObject("cpuLast5Hands", cpuLast5Hands);
 
 		return mav;
-	}
 
+	}
 
 	/**
 	 * ゲームを実行する<br>
@@ -98,4 +104,24 @@ public class LookOverThereController {
 		// TODO 入力チェックの実装
 		return false;
 	}
+
+	/** 方向コード(1〜4)を矢印文字に変換するヘルパー */
+	private String toArrow(Integer direction) {
+		if (direction == null) {
+			return "-";
+		}
+		switch (direction) {
+		case 1:
+			return "↑";
+		case 2:
+			return "↓";
+		case 3:
+			return "←";
+		case 4:
+			return "→";
+		default:
+			return "-";
+		}
+	}
+
 }

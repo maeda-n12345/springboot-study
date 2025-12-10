@@ -4,23 +4,33 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt"%>
 <%@ taglib prefix="game" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="ext" uri="http://example.com/tags/ext"%>
+
 
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>あっちむいてほい!</title>
-</head>
-<body>
-	<h2>あっちむいてほい!</h2>
 
+<game:layout title="あっちむいてほい!">
 	<div>
 		<span><c:out value="${name}" /></span>
 	</div>
 
 	<form id="playForm" name="playForm" action="play" method="post">
-		<div>1:上 2:下 3:左 4:右</div>
-		<input type="text" name="d"> <input type="submit" value="送信">
+		<div>向きを選んでください：</div>
+		<div>
+			<label> <input type="radio" name="d" value="1"
+				checked="checked"> 上
+			</label> <label> <input type="radio" name="d" value="2"> 下
+			</label> <label> <input type="radio" name="d" value="3"> 左
+			</label> <label> <input type="radio" name="d" value="4"> 右
+			</label>
+		</div>
+		<div style="margin-top: 8px;">
+			<input type="submit" value="送信">
+		</div>
 	</form>
+
 
 	<c:if test="${not empty historyList}">
 		<c:set var="last" value="${historyList[0]}" />
@@ -28,52 +38,15 @@
 			attackerDirection="${last.attackerDirection}"
 			defenderName="${last.defenderDisplayName}"
 			defenderDirection="${last.defenderDirection}" judge="${last.winner}" />
+		<p>
+			CPUが出した直近5戦の方向：
+			<ext:join var="${cpuLast5Hands}" split=" ,"
+				emptyMessage="まだ対戦履歴がありません" />
+		</p>
+
 	</c:if>
 
-	<h3>本日の対戦履歴（最新10件）</h3>
-	<c:choose>
-		<c:when test="${empty historyList}">
-			<div>対戦履歴がありません</div>
-		</c:when>
-		<c:otherwise>
-			<table>
-				<thead>
-					<tr>
-						<th>対戦日時</th>
-						<th>アタッカー</th>
-						<th>アタッカーの方向</th>
-						<th>ディフェンダー</th>
-						<th>ディフェンダーの方向</th>
-						<th>勝者</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach var="h" items="${historyList}">
-						<tr>
-							<td><fmt:formatDate value="${h.matchDatetime}"
-									pattern="yyyy/MM/dd HH:mm:ss" /></td>
-							<td><c:out value="${h.attackerDisplayName}" /></td>
-							<td><c:choose>
-									<c:when test="${h.attackerDirection == 1}">↑</c:when>
-									<c:when test="${h.attackerDirection == 2}">↓</c:when>
-									<c:when test="${h.attackerDirection == 3}">←</c:when>
-									<c:when test="${h.attackerDirection == 4}">→</c:when>
-									<c:otherwise>-</c:otherwise>
-								</c:choose></td>
-							<td><c:out value="${h.defenderDisplayName}" /></td>
-							<td><c:choose>
-									<c:when test="${h.defenderDirection == 1}">↑</c:when>
-									<c:when test="${h.defenderDirection == 2}">↓</c:when>
-									<c:when test="${h.defenderDirection == 3}">←</c:when>
-									<c:when test="${h.defenderDirection == 4}">→</c:when>
-									<c:otherwise>-</c:otherwise>
-								</c:choose></td>
-							<td><c:out value="${h.winner}" /></td>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-		</c:otherwise>
-	</c:choose>
-</body>
+	<game:historySection items="${historyList}" />
+
+</game:layout>
 </html>

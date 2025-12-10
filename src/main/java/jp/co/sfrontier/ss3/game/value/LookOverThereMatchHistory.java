@@ -14,4 +14,7 @@ public class LookOverThereMatchHistory {
 	private String attackerDisplayName;
 	private String defenderDisplayName;
 	private Integer judge;
+	private String winner;
+	private Integer attackerDirection;
+	private Integer defenderDirection;
 }
