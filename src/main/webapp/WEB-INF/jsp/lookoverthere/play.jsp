@@ -34,7 +34,7 @@
 
 	<c:if test="${not empty historyList}">
 		<c:set var="last" value="${historyList[0]}" />
-		<game:matchResult attackerName="${last.attackerDisplayName}"
+		<ext:matchResult attackerName="${last.attackerDisplayName}"
 			attackerDirection="${last.attackerDirection}"
 			defenderName="${last.defenderDisplayName}"
 			defenderDirection="${last.defenderDirection}" judge="${last.winner}" />

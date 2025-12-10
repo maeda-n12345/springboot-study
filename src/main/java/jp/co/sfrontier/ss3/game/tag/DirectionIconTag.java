@@ -9,7 +9,7 @@ import jakarta.servlet.jsp.tagext.SimpleTagSupport;
 /**
  * 方向コード(１～４)を矢印(↑↓←→)に変換して出力するカスタムタグ
  */
-public class DirectionIcon extends SimpleTagSupport {
+public class DirectionIconTag extends SimpleTagSupport {
 	private Integer direction;
 
 	public void setDirection(Integer direction) {
@@ -42,7 +42,6 @@ public class DirectionIcon extends SimpleTagSupport {
 				icon = "-";
 			}
 		}
-
 		out.print(icon);
 	}
 }

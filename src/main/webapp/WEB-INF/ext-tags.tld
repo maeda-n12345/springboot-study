@@ -51,13 +51,49 @@
 
 	<tag>
 		<name>directionIcon</name>
-		<tag-class>jp.co.sfrontier.ss3.game.tag.DirectionIcon</tag-class>
+		<tag-class>jp.co.sfrontier.ss3.game.tag.DirectionIconTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
 			<name>direction</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.Integer</type>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>matchResult</name>
+		<tag-class>jp.co.sfrontier.ss3.game.tag.MatchResultTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>attackerName</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>attackerDirection</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.Integer</type>
+		</attribute>
+		<attribute>
+			<name>defenderName</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>defenderDirection</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.Integer</type>
+		</attribute>
+		<attribute>
+			<name>judge</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
 		</attribute>
 	</tag>
 </taglib>
