@@ -11,7 +11,8 @@ import jakarta.servlet.jsp.tagext.SimpleTagSupport;
 import jp.co.sfrontier.ss3.game.value.LookOverThereMatchHistory;
 
 /**
- * 対戦履歴1行分を出力するカスタムタグ
+ * 対戦履歴1行分を出力するカスタムタグ<br>
+ * <br>
  */
 public class HistoryRowTag extends SimpleTagSupport {
 	private LookOverThereMatchHistory history;

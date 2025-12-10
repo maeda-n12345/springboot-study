@@ -72,24 +72,28 @@
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
+		
 		<attribute>
 			<name>attackerDirection</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.Integer</type>
 		</attribute>
+		
 		<attribute>
 			<name>defenderName</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
+		
 		<attribute>
 			<name>defenderDirection</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.Integer</type>
 		</attribute>
+		
 		<attribute>
 			<name>judge</name>
 			<required>true</required>
@@ -103,6 +107,7 @@
 		<name>layout</name>
 		<tag-class>jp.co.sfrontier.ss3.game.tag.LayoutTag</tag-class>
 		<body-content>scriptless</body-content>
+		
 		<attribute>
 			<name>title</name>
 			<required>true</required>
@@ -125,5 +130,18 @@
 		</attribute>
 	</tag>
 
+	<!-- 対戦履歴セクション全体を出力するタグ -->
+	<tag>
+		<name>historySection</name>
+		<tag-class>jp.co.sfrontier.ss3.game.tag.HistorySectionTag</tag-class>
+		<body-content>empty</body-content>
+
+		<attribute>
+			<name>items</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.util.List</type>
+		</attribute>
+	</tag>
 </taglib>
 

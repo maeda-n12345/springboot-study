@@ -44,7 +44,7 @@
 
 	</c:if>
 
-	<game:historySection items="${historyList}" />
+	<ext:historySection items="${historyList}" />
 
 	</ext:layout>
 </html>
