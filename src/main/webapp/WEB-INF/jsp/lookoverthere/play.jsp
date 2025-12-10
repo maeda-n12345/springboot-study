@@ -11,7 +11,7 @@
 <head>
 <meta charset="UTF-8">
 
-<game:layout title="あっちむいてほい!">
+<ext:layout title="あっちむいてほい!">
 	<div>
 		<span><c:out value="${name}" /></span>
 	</div>
@@ -48,5 +48,5 @@
 
 	<game:historySection items="${historyList}" />
 
-</game:layout>
+	</game:layout>
 </html>
