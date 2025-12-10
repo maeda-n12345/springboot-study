@@ -61,6 +61,7 @@
 		</attribute>
 	</tag>
 
+
 	<tag>
 		<name>matchResult</name>
 		<tag-class>jp.co.sfrontier.ss3.game.tag.MatchResultTag</tag-class>
@@ -97,9 +98,9 @@
 		</attribute>
 	</tag>
 
+	<!-- 画面レイアウト用のタグ -->
 	<tag>
-		<name>layout
-		</name>
+		<name>layout</name>
 		<tag-class>jp.co.sfrontier.ss3.game.tag.LayoutTag</tag-class>
 		<body-content>scriptless</body-content>
 		<attribute>
@@ -109,5 +110,20 @@
 			<type>java.lang.String</type>
 		</attribute>
 	</tag>
+
+	<!-- 対戦履歴1行分を出力するタグ -->
+	<tag>
+		<name>historyRow</name>
+		<tag-class>jp.co.sfrontier.ss3.game.tag.HistoryRowTag</tag-class>
+		<body-content>empty</body-content>
+
+		<attribute>
+			<name>history</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>jp.co.sfrontier.ss3.game.value.LookOverThereMatchHistory</type>
+		</attribute>
+	</tag>
+
 </taglib>
 
