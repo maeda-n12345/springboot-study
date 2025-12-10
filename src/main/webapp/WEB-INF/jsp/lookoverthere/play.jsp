@@ -7,9 +7,7 @@
 <%@ taglib prefix="ext" uri="http://example.com/tags/ext"%>
 
 
-<html lang="ja">
-<head>
-<meta charset="UTF-8">
+
 
 <ext:layout title="あっちむいてほい!">
 	<div>
@@ -48,5 +46,5 @@
 
 	<game:historySection items="${historyList}" />
 
-	</game:layout>
+	</ext:layout>
 </html>

@@ -8,7 +8,8 @@ import jakarta.servlet.jsp.tagext.JspFragment;
 import jakarta.servlet.jsp.tagext.SimpleTagSupport;
 
 /**
- * 画面レイアウト用のカスタムタグ
+ * 画面レイアウト用のカスタムタグ<br>
+ * <br>
  */
 public class LayoutTag extends SimpleTagSupport {
 	private String title;
