@@ -1,54 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <taglib xmlns="https://jakarta.ee/xml/ns/jakartaee"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
                             https://jakarta.ee/xml/ns/jakartaee/web-jsptaglibrary_3_0.xsd"
-        version="3.0">
+	version="3.0">
 
-    <!-- ライブラリのバージョン（好きな数字でOK） -->
-    <tlib-version>1.0</tlib-version>
+	<!-- ライブラリのバージョン -->
+	<tlib-version>1.0</tlib-version>
 
-    <!-- 短い名前（あまり使わない） -->
-    <short-name>ext-tags</short-name>
+	<!-- 短い名前 -->
+	<short-name>ext-tags</short-name>
 
-    <!-- JSP側から指定する uri（実在するURLでなくてOK） -->
-    <uri>http://example.com/tags/ext</uri>
+	<!-- JSP側から指定する uri（実在するURLでなくてOK） -->
+	<uri>http://example.com/tags/ext</uri>
 
-    <!-- join タグ定義 -->
-    <tag>
-        <!-- JSP でのタグ名：<ext:join ... /> の "join" 部分 -->
-        <name>join</name>
+	<!-- join タグ定義 -->
+	<tag>
+		<name>join</name>
 
-        <!-- 実装クラス -->
-        <tag-class>jp.co.sfrontier.ss3.game.tag.JoinTag</tag-class>
+		<!-- 実装クラス -->
+		<tag-class>jp.co.sfrontier.ss3.game.tag.JoinTag</tag-class>
 
-        <!-- ボディは持たないので empty -->
-        <body-content>empty</body-content>
+		<!-- ボディは持たないので empty -->
+		<body-content>empty</body-content>
 
-        <!-- 連結対象 -->
-        <attribute>
-            <name>var</name>
-            <required>true</required>
-            <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.Object</type>
-        </attribute>
+		<!-- 連結対象 -->
+		<attribute>
+			<name>var</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.Object</type>
+		</attribute>
 
-        <!-- 区切り文字 -->
-        <attribute>
-            <name>split</name>
-            <required>false</required>
-            <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.String</type>
-        </attribute>
+		<!-- 区切り文字 -->
+		<attribute>
+			<name>split</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
 
-        <!-- 要素が 0 件のときのメッセージ -->
-        <attribute>
-            <name>emptyMessage</name>
-            <required>false</required>
-            <rtexprvalue>true</rtexprvalue>
-            <type>java.lang.String</type>
-        </attribute>
-    </tag>
+		<!-- 要素が 0 件のときのメッセージ -->
+		<attribute>
+			<name>emptyMessage</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+	</tag>
 
+	<tag>
+		<name>directionIcon</name>
+		<tag-class>jp.co.sfrontier.ss3.game.tag.DirectionIcon</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>direction</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.Integer</type>
+		</attribute>
+	</tag>
 </taglib>
 

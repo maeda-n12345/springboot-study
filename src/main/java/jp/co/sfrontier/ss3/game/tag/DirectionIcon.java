@@ -28,12 +28,16 @@ public class DirectionIcon extends SimpleTagSupport {
 			switch (direction) {
 			case 1:
 				icon = "↑";
+				break;
 			case 2:
 				icon = "↓";
+				break;
 			case 3:
 				icon = "←";
+				break;
 			case 4:
 				icon = "→";
+				break;
 			default:
 				icon = "-";
 			}
