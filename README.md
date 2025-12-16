@@ -43,6 +43,7 @@ Spring Boot は、Springアプリケーションの起動および設定を簡�
 - 自動設定によるSpring MVC環境の構築
 - 外部Tomcatにデプロイ可能な構成
 
+---
 ### Spring MVC
 
 #### 技術概要
@@ -66,7 +67,7 @@ Spring MVC は、HTTPリクエストを受け取り、処理を振り分けるWe
       - `InternalResourceViewResolver`
 
 
-
+---
 ### BOM（Bill of Materials）
 
 #### 技術概要
@@ -82,6 +83,7 @@ Spring Boot では、動作確認済みのライブラリ組み合わせを BOM 
 - Spring関連ライブラリ間のバージョン不整合を防止できる
 - Spring Boot のバージョン変更だけで一括更新が可能である
 
+---
 ### MyBatis
 
 #### 技術概要
@@ -99,6 +101,7 @@ SQLを明示的に記述できる点が特徴である。
 - 設定ファイル
   - `src/main/resources/mybatis-config.xml`
 
+---
 ### JSP / JSTL
 
 #### 技術概要
@@ -113,6 +116,7 @@ JSTLを用いることで、ループや条件分岐などを簡潔に記述で�
   - `c:out`
   - `c:forEach`
 
+---
 ### JSPカスタムタグ
 
 #### 技術概要
@@ -124,6 +128,7 @@ JSPの可読性と保守性を向上させる。
   - `jp.co.sfrontier.ss3.game.tag`
     - `JoinTag.java`
 
+---
 ### JSONレスポンス（@ResponseBody）
 
 #### 技術概要
@@ -137,6 +142,7 @@ JSPの可読性と保守性を向上させる。
     - `@ResponseBody`
     - 戻り値：`LookOverThereMatchResult`
 
+---
 ### Lombok
 
 #### 技術概要
@@ -152,23 +158,17 @@ Lombok は、getter / setter / toString などをアノテーションにより�
 - JSONレスポンス用オブジェクトを簡潔に記述するため
 - コード量削減および可読性向上のため
 
-
-### テスト
-
-#### 主な目的
-- ロジックや処理結果が想定通りであることの確認
-- DBアクセスを含む処理の検証
-
-#### 使用しているテスト関連技術
-
+---
 ### JUnit 5（JUnit Jupiter）
 - Javaの標準的なテストフレームワークである
 - テストケースの定義および実行を担当する
 
+---
 ### AssertJ
 - テスト結果を検証するためのアサーションライブラリである
 - テストコードを読みやすくすることができる。
 
+---
 ### Spring Test
 
 #### 技術概要
@@ -183,6 +183,8 @@ Spring の DI コンテナや各種設定を読み込んだ状態でテストを
 - Spring Boot アプリケーションコンテキストを起動した状態でテストを実行
 - DBアクセスやトランザクションを含む処理の検証に利用
 
+
+---
 ### DBUnit
 
 #### 技術概要
